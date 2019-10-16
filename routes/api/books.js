@@ -21,8 +21,8 @@ router.get('/', (req, res) => {
 // @route GET api/books/:id
 // @description Get single book by id
 // @access Public
-router.get('/:id', (req, res) => {
-  Book.findById(req.params.id)
+router.get('/:author', (req, res) => {
+  Book.find({author:req.params.author})
     .then(book => res.json(book))
     .catch(err => res.status(404).json({ nobookfound: 'No Book found' }));
 });
@@ -40,7 +40,7 @@ router.post('/', (req, res) => {
 // @description Update book
 // @access Public
 router.put('/:id', (req, res) => {
-  Book.findByIdAndUpdate(req.params.id, req.body)
+  Book.findByIdAndUpdate(objectID(req.params.id), req.body)
     .then(book => res.json({ msg: 'Updated successfully' }))
     .catch(err =>
       res.status(400).json({ error: 'Unable to update the Database' })
